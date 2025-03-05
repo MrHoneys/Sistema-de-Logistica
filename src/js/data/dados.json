@@ -1,0 +1,22 @@
+{
+    "remetentes": [
+        {
+            "nome": "TESTE",
+            "cidade": "Campina Grande do Sul - PR"
+        },
+        {
+            "nome": "TESTE 1",
+            "cidade": "Curitiba - PR"
+        }
+    ],
+    "destinos": [
+        {
+            "nome": "CLIENTE A",
+            "cidade": "São Paulo - SP"
+        },
+        {
+            "nome": "CLIENTE B",
+            "cidade": "Rio de Janeiro - RJ"
+        }
+    ]
+}

@@ -1,0 +1,207 @@
+/* Reset geral */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Estilo geral do header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black; /* Cor de fundo alterada para preto */
+    color: #ecf0f1; /* Cor do texto */
+    padding: 15px 20px; /* Aumentado o padding para dar mais espaço */
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra para destacar o header */
+}
+
+/* Estilo da logo */
+.logo {
+    font-size: 28px; /* Tamanho maior para a logo */
+    font-weight: bold;
+    letter-spacing: 6px; /* Espaçamento maior entre as letras */
+    cursor: pointer;
+    margin-left: 225px;
+    text-transform: uppercase; /* Deixa o texto em maiúsculas */
+    background: linear-gradient(90deg, #3498db, #9b59b6); /* Gradiente suave */
+    -webkit-background-clip: text; /* Aplica o gradiente ao texto */
+    color: transparent; /* Remove a cor padrão do texto */
+}
+
+/* Estilo do menu */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px; /* Espaçamento maior entre os itens do menu */
+    margin-right: 155px;
+}
+
+nav ul li {
+    font-size: 18px; /* Tamanho maior para os itens do menu */
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease; /* Adiciona animação suave */
+    position: relative;
+}
+
+nav ul li a {
+    text-decoration: none; /* Remove o sublinhado padrão dos links */
+    color: inherit; /* Herda a cor do texto do pai */
+}
+
+nav ul li a:hover {
+    color: #3498db; /* Cor ao passar o mouse */
+}
+
+/* Efeito sublinhado ao passar o mouse */
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px; /* Posiciona abaixo do texto */
+    width: 0;
+    height: 2px;
+    background-color: #3498db;
+    transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after {
+    width: 100%; /* Expande o sublinhado ao passar o mouse */
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto; /* Centraliza verticalmente e horizontalmente */
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#resultado-relatorio {
+    max-width: 1000px; /* Define uma largura máxima para a tabela */
+    margin: 20px auto; /* Centraliza horizontalmente */
+    padding: 0 20px; /* Adiciona espaçamento lateral */
+    box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+}
+
+/* Estilo para a tabela de resultados */
+#resultado-relatorio table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#resultado-relatorio table th,
+#resultado-relatorio table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+#resultado-relatorio table th {
+    background-color: #2c3e50;
+    color: #fff;
+    font-weight: bold;
+}
+
+#resultado-relatorio table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#resultado-relatorio table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Destaque para Validação */
+.validacao-verde {
+    color: green;
+    font-weight: bold;
+}
+
+.validacao-vermelha {
+    color: red;
+    font-weight: bold;
+}
+
+/* Estilo para o botão de adicionar pallet */
+#adicionar-pallet {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+#adicionar-pallet:hover {
+    background-color: #27ae60;
+}
+
+/* Estilo para os campos de pallet */
+.pallet-inputs {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.pallet-inputs label {
+    display: block;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.pallet-inputs input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}

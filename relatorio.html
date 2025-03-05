@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerar Relatório</title>
+    <link rel="stylesheet" href="src/css/relatorio.css">
+</head>
+<body>
+    <header>
+        <div class="logo">LOGISTICA RS</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Início</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="painel-filtros">
+        <div class="filtros-container">
+            <div>
+                <label>Todas as Transportadoras</label>
+                <input type="checkbox" id="todas-transportadoras">
+            </div>
+            <div>
+                <label>Pedido</label>
+                <input type="text" id="pedido" placeholder="Ex.: 12345">
+            </div>
+            <div>
+                <label>Data</label>
+                <input type="date" id="data-filtro">
+            </div>
+            <div>
+                <label>Transportadora</label>
+                <input type="text" id="transportadora" placeholder="Ex.: Transporte ABC">
+            </div>
+            <div>
+                <label>Remetente</label>
+                <input type="text" id="remetente" placeholder="Nome do remetente">
+            </div>
+            <div>
+                <label>Destino</label>
+                <input type="text" id="destino" placeholder="Nome do destino">
+            </div>
+            <div>
+                <label>Cidade Remetente</label>
+                <input type="text" id="cidade-remetente" placeholder="Ex.: São Paulo">
+            </div>
+            <div>
+                <label>Cidade Destino</label>
+                <input type="text" id="cidade-destino" placeholder="Ex.: Rio de Janeiro">
+            </div>
+            <div>
+                <label>CT-e</label>
+                <input type="text" id="cte" placeholder="Ex.: 123456789">
+            </div>
+            <div>
+                <label>Tipo</label>
+                <select id="tipo-filtro">
+                    <option value="">Todos</option>
+                    <option value="venda">Venda</option>
+                    <option value="ferramentaria">Ferramentaria</option>
+                    <option value="manutencao">Manutenção</option>
+                    <option value="materia prima">Matéria Prima</option>
+                </select>
+            </div>
+            <div>
+                <label>Status</label>
+                <select id="status-filtro">
+                    <option value="aprovado">Aprovado</option>
+                    <option value="">Todos</option>
+                    <option value="cotacao">Cotação</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+            </div>
+        </div>
+        <div class="gerar-relatorio-btn">
+            <button id="gerar-relatorio">Gerar Relatório</button>
+        </div>
+    </div>
+
+    <div id="resultado-relatorio"></div>
+
+    <!-- Botões de Exportação -->
+    <div class="export-buttons" id="export-buttons" style="display: none;">
+        <button class="csv" onclick="exportToCSV()">Exportar CSV</button>
+        <button class="json" onclick="exportToJSON()">Exportar JSON</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="src/js/relatorio.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="src/css/index.css">
+    <title>Document</title>
+</head>
+<body>
+    <!-- HEADER PRINCIPAL -->
+    <header>
+        <!-- Logo -->
+        <div class="logo">LOGISTICA RS</div>
+
+        <!-- Menu de navegação -->
+        <nav>
+            <ul>
+                <li><a href="index.html">Cotação</a></li>
+                <li><a href="simulador.html">Simulador</a></li>
+                <li><a href="contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Painel de Pesquisa e Relatórios -->
+    <div class="painel-ferramentas">
+        <div class="pesquisa-container">
+            <input type="text" id="campo-pesquisa" placeholder="Pesquisar por Remetente, Destino, Pedido..." />
+        </div>
+        <div class="relatorio-container">
+            <button id="abrir-modal-relatorio"><a href="relatorio.html">Gerar Relatório em PDF</a></button>
+        </div>
+    </div>
+
+    <!-- Formulário de Adição -->
+    <form id="form-adicao">
+        <input type="date" id="data-cotacao" placeholder="Data da Cotação" required readonly>
+        <input type="text" id="pedido" placeholder="Pedido" required>
+        <input type="text" id="transportadora" placeholder="Transportadora" required>
+        <input type="text" id="remetente" placeholder="Remetente" required>
+        <input type="text" id="destino" placeholder="Destino" required>
+        <input type="text" id="cidade-remetente" placeholder="Cidade Remetente" required readonly>
+        <input type="text" id="cidade-destino" placeholder="Cidade Destino" required>
+        <input type="text" id="valor" placeholder="Valor" required>
+        <select id="tipo">
+            <option value="VENDA">VENDA</option>
+            <option value="MATERIA PRIMA">MATERIA PRIMA</option>
+            <option value="FERRAMENTARIA">FERRAMENTARIA</option>
+            <option value="MANUTENÇÃO">MANUTENÇÃO</option>
+        </select>
+        <select id="status">
+            <option value="COTAÇÃO">COTAÇÃO</option>
+            <option value="APROVADO">APROVADO</option>
+            <option value="CANCELADO">CANCELADO</option>
+        </select>
+        <input type="text" id="cte" placeholder="CT-e">
+        <input type="text" id="observacao" placeholder="Observação">
+        <button type="submit">Adicionar</button>
+    </form>
+
+<!-- Tabela de Cotações -->
+<table id="tabela-cotacoes">
+    <thead>
+        <tr>
+            <th>Data Cotação</th>
+            <th>Pedido</th>
+            <th>Transportadora</th>
+            <th>Remetente</th>
+            <th>Destino</th>
+            <th>Cidade Remetente</th>
+            <th>Cidade Destino</th>
+            <th>Valor</th>
+            <th>Tipo</th>
+            <th>Status</th>
+            <th>CT-e</th>
+            <th>Observação</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Linhas serão adicionadas aqui dinamicamente -->
+    </tbody>
+</table>
+
+    <!-- Botões de Paginação -->
+    <div id="botoes-paginacao" class="pagination-container">
+        <button id="botao-voltar" class="pagination-button">Voltar</button>
+        <span id="pagina-atual" class="pagination-info">Página 1</span>
+        <button id="botao-proximo" class="pagination-button">Próximo</button>
+    </div>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="src/js/index.js"></script>
+
+</body> 
+</html>

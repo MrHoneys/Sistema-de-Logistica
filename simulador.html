@@ -1,0 +1,48 @@
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Simulador de Cubagem</title>
+        <link rel="stylesheet" href="src/css/simulador.css">
+    </head>
+    <body>
+        <header>
+            <div class="logo">LOGISTICA RS</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <div class="container">
+                <div class="filtros-container">
+                    <label for="tipo-veiculo">Selecione o tipo de veículo:</label>
+                    <select id="tipo-veiculo">
+                        <option value="carreta">Carreta</option>
+                        <option value="truck">Truck</option>
+                        <option value="outros">Outros</option>
+                    </select>
+
+                    <label for="comprimento">Comprimento do Pallet (m):</label>
+                    <input type="number" id="comprimento" step="0.01" placeholder="Ex.: 1.10">
+
+                    <label for="largura">Largura do Pallet (m):</label>
+                    <input type="number" id="largura" step="0.01" placeholder="Ex.: 1.20">
+
+                    <label for="altura">Altura do Pallet (m):</label>
+                    <input type="number" id="altura" step="0.01" placeholder="Ex.: 1.90">
+                </div>
+                <div class="gerar-relatorio-btn">
+                    <button id="calcular">Calcular</button>
+                </div>
+            </div>
+
+            <div id="resultado-relatorio"></div>
+        </main>
+
+        <script src="src/js/simulador.js"></script>
+    </body>
+    </html>

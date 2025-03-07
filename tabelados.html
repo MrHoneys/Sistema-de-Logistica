@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/css/tabelados.css">
+    <title>Tabela de Clientes</title>
+</head>
+
+<body>
+    <!-- HEADER PRINCIPAL -->
+    <header>
+        <!-- Logo -->
+        <div class="logo">LOGISTICA RS</div>
+
+        <!-- Menu de navegação -->
+        <nav>
+            <ul>
+                <li><a href="index.html">Cotação</a></li>
+                <li><a href="simulador.html">Simulador</a></li>
+                <li><a href="tabelados.html">Tabelados</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main>
+        <h1>Tabela de Clientes</h1>
+
+        <!-- Campo de filtro -->
+        <div class="filtro-container">
+            <input type="text" id="filtro" placeholder="Buscar cliente, endereço, transportadora...">
+        </div>
+
+        <!-- Tabela -->
+        <div class="tabela-container">
+            <table id="tabela-clientes">
+                <thead>
+                    <tr>
+                        <th>CLIENTE</th>
+                        <th>ENDEREÇO</th>
+                        <th>TRANSPORTADORA</th>
+                        <th>VALOR IDA</th>
+                        <th>VALOR VOLTA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- As linhas da tabela serão preenchidas aqui pelo JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="src/js/tabelados.js"></script>
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 // Variáveis globais para controle da paginação
 let dadosSalvos = [];
 let paginaAtual = 1;
+let ordemAtual = 'asc'; // Controla a direção da ordenação
 const itensPorPagina = 10;
 const { jsPDF } = window.jspdf;
 const doc = new jsPDF();
@@ -25,13 +26,28 @@ function obterCorTipo(tipo) {
 // Função para obter a cor do status
 function obterCorStatus(status) {
     const cores = {
-        'COTAÇÃO': 'yellow',
+        'COTAÇÃO': '#fc0356',
         'CANCELADO': 'red',
         'APROVADO': 'green'
     };
     return cores[status] || 'black';
 }
 
+// Função para criar um menu suspenso dinâmico
+function criarDropdown(opcoes, valorSelecionado, onChange) {
+    const select = document.createElement('select');
+    opcoes.forEach(opcao => {
+        const option = document.createElement('option');
+        option.value = opcao;
+        option.textContent = opcao;
+        if (opcao === valorSelecionado) {
+            option.selected = true;
+        }
+        select.appendChild(option);
+    });
+    select.addEventListener('change', onChange);
+    return select;
+}
 // Função para carregar dados salvos no localStorage
 function carregarDados() {
     const tabelaBody = document.querySelector('#tabela-cotacoes tbody');
@@ -45,6 +61,20 @@ function carregarDados() {
 
     dadosPaginaAtual.forEach((dados, index) => {
         const novaLinha = document.createElement('tr');
+        
+        // Criando menus suspensos para TIPO e STATUS
+        const selectTipo = criarDropdown(['VENDA', 'FERRAMENTARIA', 'MANUTENÇÃO', 'MATERIA PRIMA'], dados.tipo, (event) => {
+            dadosSalvos[indiceInicial + index].tipo = event.target.value;
+            salvarDadosNoCache(dadosSalvos);
+        });
+        selectTipo.style.color = obterCorTipo(dados.tipo);
+        
+        const selectStatus = criarDropdown(['COTAÇÃO', 'CANCELADO', 'APROVADO'], dados.status, (event) => {
+            dadosSalvos[indiceInicial + index].status = event.target.value;
+            salvarDadosNoCache(dadosSalvos);
+        });
+        selectStatus.style.color = obterCorStatus(dados.status);
+
         novaLinha.innerHTML = `
             <td>${dados.dataCotacao}</td>
             <td>${dados.pedido}</td>
@@ -54,8 +84,8 @@ function carregarDados() {
             <td>${dados.cidadeRemetente}</td>
             <td>${dados.cidadeDestino}</td>
             <td>R$ ${parseFloat(dados.valor).toFixed(2)}</td>
-            <td style="color: ${obterCorTipo(dados.tipo)}; font-weight: bold;">${dados.tipo}</td>
-            <td style="color: ${obterCorStatus(dados.status)}; font-weight: bold;">${dados.status}</td>
+            <td></td>
+            <td></td>
             <td>${dados.cte || '-'}</td>
             <td>${dados.observacao || '-'}</td>
             <td class="action-buttons">
@@ -63,6 +93,11 @@ function carregarDados() {
                 <button class="delete-button" data-index="${indiceInicial + index}">Excluir</button>
             </td>
         `;
+        
+        // Adicionando os menus suspensos às células
+        novaLinha.children[8].appendChild(selectTipo);
+        novaLinha.children[9].appendChild(selectStatus);
+        
         tabelaBody.appendChild(novaLinha);
     });
 
@@ -147,6 +182,8 @@ document.getElementById('campo-pesquisa').addEventListener('input', () => {
     const termoPesquisa = document.getElementById('campo-pesquisa').value.trim().toLowerCase();
     if (!termoPesquisa) {
         carregarDados(); // Se o campo estiver vazio, carrega todos os dados
+        document.getElementById('botao-voltar').disabled = false;
+        document.getElementById('botao-proximo').disabled = false;
         return;
     }
 
@@ -168,7 +205,7 @@ function exibirDadosFiltrados(dadosFiltrados) {
     const tabelaBody = document.querySelector('#tabela-cotacoes tbody');
     tabelaBody.innerHTML = '';
 
-    dadosFiltrados.forEach(dados => {
+    dadosFiltrados.forEach((dados, index) => {
         const novaLinha = document.createElement('tr');
         novaLinha.innerHTML = `
             <td>${dados.dataCotacao}</td>
@@ -176,15 +213,16 @@ function exibirDadosFiltrados(dadosFiltrados) {
             <td>${dados.transportadora}</td>
             <td>${dados.remetente}</td>
             <td>${dados.destino}</td>
-            <td>${dados.cidadeDestino}</td>
             <td>${dados.cidadeRemetente}</td>
+            <td>${dados.cidadeDestino}</td>
             <td>R$ ${parseFloat(dados.valor).toFixed(2)}</td>
             <td>${dados.tipo}</td>
+            <td>${dados.status}</td>
             <td>${dados.cte || '-'}</td>
             <td>${dados.observacao || '-'}</td>
-            <td class="acoes">
-                <button class="btn-editar" data-index="${index}"><i class="fas fa-pencil-alt"></i> Editar</button>
-                <button class="btn-excluir" data-index="${index}"><i class="fas fa-trash-alt"></i> Excluir</button>
+            <td class="action-buttons">
+                <button class="edit-button" data-index="${index}">Editar</button>
+                <button class="delete-button" data-index="${index}">Excluir</button>
             </td>
         `;
         tabelaBody.appendChild(novaLinha);
@@ -316,6 +354,114 @@ document.getElementById('botao-voltar').addEventListener('click', () => {
         carregarDados();
     }
 });
+
+
+// Função para adicionar eventos de clique nas linhas da tabela
+function adicionarEventosSelecao() {
+    const linhas = document.querySelectorAll('#tabela-cotacoes tbody tr');
+
+    linhas.forEach((linha, index) => {
+        linha.addEventListener('click', () => {
+            // Remove a classe 'selecionado' de todas as linhas
+            linhas.forEach(l => l.classList.remove('selecionado'));
+
+            // Adiciona a classe 'selecionado' à linha clicada
+            linha.classList.add('selecionado');
+
+            // Obtém os dados do registro selecionado
+            const registroSelecionado = dadosSalvos[index];
+
+            // Exibe os dados do registro selecionado (opcional)
+            console.log('Registro Selecionado:', registroSelecionado);
+
+            // Preenche o formulário com os dados do registro selecionado (opcional)
+            preencherFormularioComRegistro(registroSelecionado);
+        });
+    });
+}
+
+// Função para ordenar a tabela
+function ordenarTabela(coluna, tipo) {
+    const tabelaBody = document.querySelector('#tabela-cotacoes tbody');
+    const linhas = Array.from(tabelaBody.querySelectorAll('tr'));
+
+    linhas.sort((a, b) => {
+        const valorA = a.querySelector(`td:nth-child(${coluna + 1})`).textContent.trim();
+        const valorB = b.querySelector(`td:nth-child(${coluna + 1})`).textContent.trim();
+
+        if (tipo === 'numero') {
+            return parseFloat(valorA.replace('R$', '').replace(',', '')) - parseFloat(valorB.replace('R$', '').replace(',', ''));
+        } else if (tipo === 'data') {
+            return new Date(valorA) - new Date(valorB);
+        } else {
+            return valorA.localeCompare(valorB);
+        }
+    });
+
+    // Limpa a tabela
+    tabelaBody.innerHTML = '';
+
+    // Adiciona as linhas ordenadas
+    linhas.forEach(linha => tabelaBody.appendChild(linha));
+}
+
+function ordenarTabela(coluna, tipo) {
+    const tabelaBody = document.querySelector('#tabela-cotacoes tbody');
+    const linhas = Array.from(tabelaBody.querySelectorAll('tr'));
+
+    linhas.sort((a, b) => {
+        const valorA = a.querySelector(`td:nth-child(${coluna + 1})`).textContent.trim();
+        const valorB = b.querySelector(`td:nth-child(${coluna + 1})`).textContent.trim();
+
+        let comparacao;
+        if (tipo === 'numero') {
+            comparacao = parseFloat(valorA.replace('R$', '').replace(',', '')) - parseFloat(valorB.replace('R$', '').replace(',', ''));
+        } else if (tipo === 'data') {
+            comparacao = new Date(valorA) - new Date(valorB);
+        } else {
+            comparacao = valorA.localeCompare(valorB);
+        }
+
+        return ordemAtual === 'asc' ? comparacao : -comparacao;
+    });
+
+    // Limpa a tabela
+    tabelaBody.innerHTML = '';
+
+    // Adiciona as linhas ordenadas
+    linhas.forEach(linha => tabelaBody.appendChild(linha));
+
+    // Alterna a direção da ordenação
+    ordemAtual = ordemAtual === 'asc' ? 'desc' : 'asc';
+
+    // Atualiza os indicadores de ordenação
+    atualizarIndicadoresOrdenacao(coluna);
+}
+
+function atualizarIndicadoresOrdenacao(coluna) {
+    const ths = document.querySelectorAll('#tabela-cotacoes th');
+    ths.forEach((th, index) => {
+        th.innerHTML = th.textContent; // Remove setas anteriores
+        if (index === coluna) {
+            th.innerHTML += ordemAtual === 'asc' ? ' ▲' : ' ▼';
+        }
+    });
+}
+
+function ajustarTabelaParaMobile() {
+    const tabela = document.getElementById('tabela-cotacoes');
+    if (window.innerWidth < 768) {
+        const ths = tabela.querySelectorAll('th');
+        tabela.querySelectorAll('tbody tr').forEach(tr => {
+            tr.querySelectorAll('td').forEach((td, index) => {
+                td.setAttribute('data-label', ths[index].textContent);
+            });
+        });
+    }
+}
+
+window.addEventListener('resize', ajustarTabelaParaMobile);
+window.addEventListener('load', ajustarTabelaParaMobile);
 
 // Inicializa as funcionalidades
 window.addEventListener('load', async () => {

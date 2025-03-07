@@ -1,0 +1,23 @@
+[
+    {
+        "cliente": "Cliente 1",
+        "endereco": "Rua A, 123",
+        "transportadora": "Transportadora X",
+        "valorIda": "R$ 100,00",
+        "valorVolta": "R$ 90,00"
+    },
+    {
+        "cliente": "Cliente 2",
+        "endereco": "Rua B, 456",
+        "transportadora": "Transportadora Y",
+        "valorIda": "R$ 120,00",
+        "valorVolta": "R$ 110,00"
+    },
+    {
+        "cliente": "Cliente 3",
+        "endereco": "Rua C, 789",
+        "transportadora": "Transportadora Z",
+        "valorIda": "R$ 150,00",
+        "valorVolta": "R$ 140,00"
+    }
+]

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="src/css/index.css">
-    <title>Document</title>
+    <title>Gestão de Cotações</title>
 </head>
 <body>
     <!-- HEADER PRINCIPAL -->
@@ -35,53 +35,78 @@
 
     <!-- Formulário de Adição -->
     <form id="form-adicao">
-        <input type="date" id="data-cotacao" placeholder="Data da Cotação" required readonly>
-        <input type="text" id="pedido" placeholder="Pedido" required>
-        <input type="text" id="transportadora" placeholder="Transportadora" required>
-        <input type="text" id="remetente" placeholder="Remetente" required>
-        <input type="text" id="destino" placeholder="Destino" required>
-        <input type="text" id="cidade-remetente" placeholder="Cidade Remetente" required readonly>
-        <input type="text" id="cidade-destino" placeholder="Cidade Destino" required>
-        <input type="text" id="valor" placeholder="Valor" required>
-        <select id="tipo">
-            <option value="VENDA">VENDA</option>
-            <option value="MATERIA PRIMA">MATERIA PRIMA</option>
-            <option value="FERRAMENTARIA">FERRAMENTARIA</option>
-            <option value="MANUTENÇÃO">MANUTENÇÃO</option>
-        </select>
-        <select id="status">
-            <option value="COTAÇÃO">COTAÇÃO</option>
-            <option value="APROVADO">APROVADO</option>
-            <option value="CANCELADO">CANCELADO</option>
-        </select>
-        <input type="text" id="cte" placeholder="CT-e">
-        <input type="text" id="observacao" placeholder="Observação">
-        <button type="submit">Adicionar</button>
+        <!-- Linha 1: Data, Pedido, Transportadora -->
+        <div class="form-row">
+            <input type="date" id="data-cotacao" placeholder="Data da Cotação" required readonly>
+            <input type="text" id="pedido" placeholder="Pedido" required>
+            <input type="text" id="transportadora" placeholder="Transportadora" required>
+        </div>
+
+        <!-- Linha 2: Remetente, Destino, Cidade Remetente, Cidade Destino -->
+        <div class="form-row">
+            <div class="input-com-lupa">
+                <input type="text" id="remetente" placeholder="Remetente" required>
+                <i class="fas fa-search lupa" id="lupa-remetente"></i>
+            </div>
+            <div class="input-com-lupa">
+                <input type="text" id="destino" placeholder="Destino" required>
+                <i class="fas fa-search lupa" id="lupa-destino"></i>
+            </div>
+            <input type="text" id="cidade-remetente" placeholder="Cidade Remetente" required readonly>
+            <input type="text" id="cidade-destino" placeholder="Cidade Destino" required>
+        </div>
+
+        <!-- Linha 3: Valor, Tipo, Status, CT-e -->
+        <div class="form-row">
+            <input type="text" id="valor" placeholder="Valor" required>
+            <select id="tipo">
+                <option value="VENDA">VENDA</option>
+                <option value="MATERIA PRIMA">MATERIA PRIMA</option>
+                <option value="FERRAMENTARIA">FERRAMENTARIA</option>
+                <option value="MANUTENÇÃO">MANUTENÇÃO</option>
+            </select>
+            <select id="status">
+                <option value="COTAÇÃO">COTAÇÃO</option>
+                <option value="APROVADO">APROVADO</option>
+                <option value="CANCELADO">CANCELADO</option>
+            </select>
+            <input type="text" id="cte" placeholder="CT-e">
+        </div>
+
+        <!-- Linha 4: Observação (área grande) -->
+        <div class="form-row">
+            <textarea id="observacao" placeholder="Observação" rows="4"></textarea>
+        </div>
+
+        <!-- Botão de Adicionar -->
+        <div class="form-row">
+            <button type="submit">Adicionar</button>
+        </div>
     </form>
 
-<!-- Tabela de Cotações -->
-<table id="tabela-cotacoes">
-    <thead>
-        <tr>
-            <th>Data Cotação</th>
-            <th>Pedido</th>
-            <th>Transportadora</th>
-            <th>Remetente</th>
-            <th>Destino</th>
-            <th>Cidade Remetente</th>
-            <th>Cidade Destino</th>
-            <th>Valor</th>
-            <th>Tipo</th>
-            <th>Status</th>
-            <th>CT-e</th>
-            <th>Observação</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Linhas serão adicionadas aqui dinamicamente -->
-    </tbody>
-</table>
+    <!-- Tabela de Cotações -->
+    <table id="tabela-cotacoes">
+        <thead>
+            <tr>
+                <th>Data Cotação</th>
+                <th>Pedido</th>
+                <th>Transportadora</th>
+                <th>Remetente</th>
+                <th>Destino</th>
+                <th>Cidade Remetente</th>
+                <th>Cidade Destino</th>
+                <th>Valor</th>
+                <th>Tipo</th>
+                <th>Status</th>
+                <th>CT-e</th>
+                <th>Observação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Linhas serão adicionadas aqui dinamicamente -->
+        </tbody>
+    </table>
 
     <!-- Botões de Paginação -->
     <div id="botoes-paginacao" class="pagination-container">
@@ -90,9 +115,26 @@
         <button id="botao-proximo" class="pagination-button">Próximo</button>
     </div>
 
-    
+    <!-- Modal para seleção de remetente e destino -->
+    <div id="modal-selecao" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Selecione uma opção</h2>
+            <input type="text" id="filtro-selecao" placeholder="Filtrar...">
+            <ul id="lista-selecao"></ul>
+        </div>
+    </div>
+
+    <!-- Modal para exibir observações -->
+    <div id="modal-observacao" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Observação</h2>
+            <p id="texto-observacao"></p>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="src/js/index.js"></script>
-
-</body> 
+</body>
 </html>

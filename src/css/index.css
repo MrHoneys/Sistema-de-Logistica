@@ -1,27 +1,33 @@
-/* Reset geral */
+/* Reset Geral */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Estilo geral do header */
+/* Estilos Gerais Compactados */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.4;
+    font-size: 12px;
+}
+
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: black;
-    color: #ecf0f1;
-    padding: 15px 20px;
-    font-family: 'Arial', sans-serif;
+    background-color: black; /* Cor de fundo alterada para preto */
+    color: white;
+    padding: 10px 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo da logo */
 .logo {
-    font-size: 28px;
+    font-size: 20px;
     font-weight: bold;
-    letter-spacing: 6px;
+    letter-spacing: 4px;
     cursor: pointer;
     margin-left: 225px;
     text-transform: uppercase;
@@ -30,16 +36,15 @@ header {
     color: transparent;
 }
 
-/* Estilo do menu */
 nav ul {
     list-style: none;
     display: flex;
-    gap: 30px;
-    margin-right: 155px;
+    gap: 15px;
+    margin-right: 20px;
 }
 
 nav ul li {
-    font-size: 18px;
+    font-size: 14px;
     cursor: pointer;
     transition: color 0.3s ease, transform 0.3s ease;
     position: relative;
@@ -58,7 +63,7 @@ nav ul li a::after {
     content: '';
     position: absolute;
     left: 0;
-    bottom: -5px;
+    bottom: -3px;
     width: 0;
     height: 2px;
     background-color: #3498db;
@@ -69,30 +74,30 @@ nav ul li a:hover::after {
     width: 100%;
 }
 
-/* Painel de Ferramentas (Pesquisa e Relatórios) */
+/* Painel de Ferramentas Compactado */
 .painel-ferramentas {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px;
-    padding: 10px;
-    background-color: #f9f9f9;
+    margin: 10px;
+    padding: 8px;
+    background-color: #fff;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .pesquisa-container input {
-    padding: 10px;
-    width: 300px;
+    padding: 8px;
+    width: 250px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .relatorio-container button {
-    padding: 10px 20px;
-    font-size: 14px;
+    padding: 8px 16px;
+    font-size: 12px;
     background-color: #3498db;
     color: #fff;
     border: none;
@@ -106,21 +111,90 @@ nav ul li a:hover::after {
     transform: scale(1.05);
 }
 
-/* Tabela */
+/* Formulário Compactado */
+form {
+    width: 90%;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-row {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+    flex: 1;
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-row textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form-row button {
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.form-row button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+/* Estilos para os campos com ícone de lupa */
+.input-com-lupa {
+    position: relative;
+    flex: 1;
+}
+
+.input-com-lupa input {
+    width: 100%;
+    padding-right: 30px;
+}
+
+.input-com-lupa .lupa {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    cursor: pointer;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.input-com-lupa .lupa:hover {
+    color: #3498db;
+}
+
+/* Tabela Compactada */
 table {
     width: 90%;
-    margin: 20px auto;
+    margin: 10px auto;
+    font-size: 12px;
     border-collapse: collapse;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
     background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
 }
 
 table th, table td {
-    padding: 12px;
+    padding: 6px;
     text-align: left;
     border-bottom: 1px solid #ddd;
 }
@@ -139,83 +213,19 @@ table tr:hover {
     background-color: #f1f1f1;
 }
 
-/* Formulário de adição */
-form {
-    width: 90%;
-    margin: 20px auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-form input, form select, form button {
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    flex: 1;
-}
-
-form button {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-form button:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
-}
-
-/* Botões de Paginação */
-.pagination-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.pagination-button {
-    padding: 10px 20px;
-    font-size: 14px;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin: 0 5px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.pagination-button:hover {
-    background-color: #2980b9;
-    transform: scale(1.1);
-}
-
-.pagination-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-.pagination-info {
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0 10px;
-}
-
-/* Botões de ação */
+/* Botões Compactados */
 .action-buttons {
     display: flex;
-    gap: 5px;
+    gap: 3px;
 }
 
 .edit-button, .delete-button {
     border: none;
-    padding: 6px 12px;
-    font-size: 14px;
-    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .edit-button {
@@ -225,7 +235,7 @@ form button:hover {
 
 .edit-button:hover {
     background-color: #0056b3;
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .delete-button {
@@ -235,51 +245,204 @@ form button:hover {
 
 .delete-button:hover {
     background-color: #a71d2a;
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
-/* Estilizando os selects (menus suspensos) */
-.select-editable {
+/* Botões de Paginação */
+.pagination-container {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.pagination-button {
+    padding: 8px 16px;
+    font-size: 12px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 3px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pagination-button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+.pagination-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0 5px;
+}
+
+/* Modal Compactado */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+    left: 522px;
+    top: 222px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #2c3e50;
+    text-align: center;
+    font-weight: bold;
+}
+
+.modal-content .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.modal-content .close:hover {
+    color: #333;
+}
+
+.modal-content p {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.modal-content button {
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal-content button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+/* Estilos específicos para o modal de observação */
+#modal-observacao .modal-content {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+#modal-observacao h2 {
+    color: #3498db;
+}
+
+#modal-observacao p {
+    font-size: 16px;
+    color: #555;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Estilos para o modal de seleção */
+#modal-selecao .modal-content {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+#modal-selecao h2 {
+    color: #3498db;
+}
+
+#modal-selecao input {
     width: 100%;
     padding: 8px;
-    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
     border-radius: 4px;
-    background-color: white;
-    font-size: 14px;
-    appearance: none; /* Remove a aparência padrão */
-    background-image: url('data:image/svg+xml;utf8,<svg fill="%23007bff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18px" height="18px"><path d="M7 10l5 5 5-5z"/></svg>'); 
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 12px;
-    cursor: pointer;
-}
-
-.select-editable:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-#tabela-cotacoes th {
-    position: relative;
-    padding-right: 20px; /* Espaço para a seta */
-}
-
-#tabela-cotacoes th::after {
-    content: '';
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
     font-size: 12px;
 }
 
-#tabela-cotacoes th.asc::after {
-    content: '▲';
+#modal-selecao ul {
+    list-style: none;
+    max-height: 250px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
 }
 
-#tabela-cotacoes th.desc::after {
-    content: '▼';
+#modal-selecao li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#modal-selecao li:hover {
+    background-color: #f1f1f1;
+}
+
+#modal-selecao li span {
+    flex: 1;
+    text-align: left;
+}
+
+/* Estilos para o botão "ABRIR" na coluna de observação */
+.abrir-observacao {
+    padding: 6px 12px;
+    font-size: 12px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.abrir-observacao:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
 }
 
 /* Responsividade */
@@ -292,19 +455,19 @@ form button:hover {
 
     .logo {
         margin-left: 0;
-        font-size: 24px;
+        font-size: 18px;
         margin-bottom: 10px;
     }
 
     nav ul {
         flex-direction: column;
-        gap: 10px;
+        gap: 5px;
         margin-right: 0;
     }
 
     .painel-ferramentas {
         flex-direction: column;
-        gap: 10px;
+        gap: 5px;
     }
 
     .pesquisa-container input {
@@ -327,25 +490,41 @@ form button:hover {
 
     .pagination-container {
         flex-direction: column;
-        gap: 10px;
+        gap: 5px;
     }
 
     .pagination-button {
         width: 100%;
-        margin: 5px 0;
+        margin: 3px 0;
     }
 
     .action-buttons {
         flex-direction: column;
-        gap: 5px;
+        gap: 3px;
     }
 
     .edit-button, .delete-button {
         width: 100%;
     }
 
-    .select-editable {
-        width: 100%;
-        margin-bottom: 10px;
+    .modal-content {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .modal-content h2 {
+        font-size: 14px;
+    }
+
+    #filtro-selecao {
+        font-size: 12px;
+    }
+
+    #lista-selecao li {
+        font-size: 12px;
+    }
+
+    .input-com-lupa .lupa {
+        font-size: 14px;
     }
 }

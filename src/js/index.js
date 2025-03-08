@@ -1,10 +1,14 @@
-// Variáveis globais para controle da paginação
+// Variáveis globais para controle da paginação e modal
 let dadosSalvos = [];
 let paginaAtual = 1;
-let ordemAtual = 'asc'; // Controla a direção da ordenação
+let ordemAtual = 'asc';
 const itensPorPagina = 10;
 const { jsPDF } = window.jspdf;
 const doc = new jsPDF();
+
+let modal = document.getElementById('modal-selecao');
+let listaSelecao = document.getElementById('lista-selecao');
+let campoAtual = null;
 
 // Carrega os dados dos remetentes e destinos
 async function carregarDadosJSON() {
@@ -33,6 +37,66 @@ function obterCorStatus(status) {
     return cores[status] || 'black';
 }
 
+// Função para abrir o modal
+function abrirModal(campo) {
+    campoAtual = campo;
+    modal.style.display = 'block';
+    carregarOpcoes(campo);
+}
+
+// Função para fechar o modal
+function fecharModal() {
+    modal.style.display = 'none';
+}
+
+// Função para carregar as opções no modal
+async function carregarOpcoes(campo) {
+    const dados = await carregarDadosJSON();
+    const opcoes = campo === 'remetente' ? dados.remetentes : dados.destinos;
+
+    listaSelecao.innerHTML = '';
+    opcoes.forEach(opcao => {
+        const li = document.createElement('li');
+        // Adiciona o nome da empresa e a cidade no formato "EMPRESA - CIDADE"
+        li.innerHTML = `
+            <span>${opcao.nome}</span>
+            <span>${opcao.cidade}</span>
+        `;
+        li.addEventListener('click', () => {
+            document.getElementById(campo).value = opcao.nome;
+            if (campo === 'remetente') {
+                document.getElementById('cidade-remetente').value = opcao.cidade;
+            } else {
+                document.getElementById('cidade-destino').value = opcao.cidade;
+            }
+            fecharModal();
+        });
+        listaSelecao.appendChild(li);
+    });
+}
+
+// Eventos para abrir o modal
+document.getElementById('lupa-remetente').addEventListener('click', () => abrirModal('remetente'));
+document.getElementById('lupa-destino').addEventListener('click', () => abrirModal('destino'));
+
+// Evento para fechar o modal
+document.querySelector('.close').addEventListener('click', fecharModal);
+
+// Evento para filtrar as opções no modal
+document.getElementById('filtro-selecao').addEventListener('input', () => {
+    const termo = document.getElementById('filtro-selecao').value.toLowerCase();
+    const itens = listaSelecao.querySelectorAll('li');
+    itens.forEach(item => {
+        const nome = item.querySelector('span:nth-child(1)').textContent.toLowerCase();
+        const cidade = item.querySelector('span:nth-child(2)').textContent.toLowerCase();
+        if (nome.includes(termo) || cidade.includes(termo)) {
+            item.style.display = 'flex'; // Mantém o layout flexível
+        } else {
+            item.style.display = 'none';
+        }
+    });
+});
+
 // Função para criar um menu suspenso dinâmico
 function criarDropdown(opcoes, valorSelecionado, onChange) {
     const select = document.createElement('select');
@@ -48,6 +112,7 @@ function criarDropdown(opcoes, valorSelecionado, onChange) {
     select.addEventListener('change', onChange);
     return select;
 }
+
 // Função para carregar dados salvos no localStorage
 function carregarDados() {
     const tabelaBody = document.querySelector('#tabela-cotacoes tbody');
@@ -87,7 +152,7 @@ function carregarDados() {
             <td></td>
             <td></td>
             <td>${dados.cte || '-'}</td>
-            <td>${dados.observacao || '-'}</td>
+            <td><button class="abrir-observacao" data-observacao="${dados.observacao || ''}">ABRIR</button></td>
             <td class="action-buttons">
                 <button class="edit-button" data-index="${indiceInicial + index}">Editar</button>
                 <button class="delete-button" data-index="${indiceInicial + index}">Excluir</button>
@@ -219,7 +284,7 @@ function exibirDadosFiltrados(dadosFiltrados) {
             <td>${dados.tipo}</td>
             <td>${dados.status}</td>
             <td>${dados.cte || '-'}</td>
-            <td>${dados.observacao || '-'}</td>
+            <td><button class="abrir-observacao" data-observacao="${dados.observacao || ''}">ABRIR</button></td>
             <td class="action-buttons">
                 <button class="edit-button" data-index="${index}">Editar</button>
                 <button class="delete-button" data-index="${index}">Excluir</button>
@@ -355,7 +420,6 @@ document.getElementById('botao-voltar').addEventListener('click', () => {
     }
 });
 
-
 // Função para adicionar eventos de clique nas linhas da tabela
 function adicionarEventosSelecao() {
     const linhas = document.querySelectorAll('#tabela-cotacoes tbody tr');
@@ -381,30 +445,6 @@ function adicionarEventosSelecao() {
 }
 
 // Função para ordenar a tabela
-function ordenarTabela(coluna, tipo) {
-    const tabelaBody = document.querySelector('#tabela-cotacoes tbody');
-    const linhas = Array.from(tabelaBody.querySelectorAll('tr'));
-
-    linhas.sort((a, b) => {
-        const valorA = a.querySelector(`td:nth-child(${coluna + 1})`).textContent.trim();
-        const valorB = b.querySelector(`td:nth-child(${coluna + 1})`).textContent.trim();
-
-        if (tipo === 'numero') {
-            return parseFloat(valorA.replace('R$', '').replace(',', '')) - parseFloat(valorB.replace('R$', '').replace(',', ''));
-        } else if (tipo === 'data') {
-            return new Date(valorA) - new Date(valorB);
-        } else {
-            return valorA.localeCompare(valorB);
-        }
-    });
-
-    // Limpa a tabela
-    tabelaBody.innerHTML = '';
-
-    // Adiciona as linhas ordenadas
-    linhas.forEach(linha => tabelaBody.appendChild(linha));
-}
-
 function ordenarTabela(coluna, tipo) {
     const tabelaBody = document.querySelector('#tabela-cotacoes tbody');
     const linhas = Array.from(tabelaBody.querySelectorAll('tr'));
@@ -470,4 +510,38 @@ window.addEventListener('load', async () => {
     await preencherCidadeRemetente();
     await preencherCidadeDestino();
     carregarDados();
+});
+
+// Função para abrir o modal de observação
+function abrirModalObservacao(observacao) {
+    const modalObservacao = document.getElementById('modal-observacao');
+    const textoObservacao = document.getElementById('texto-observacao');
+    
+    textoObservacao.textContent = observacao || 'Nenhuma observação disponível.';
+    modalObservacao.style.display = 'block';
+}
+
+// Função para fechar o modal de observação
+function fecharModalObservacao() {
+    const modalObservacao = document.getElementById('modal-observacao');
+    modalObservacao.style.display = 'none';
+}
+
+// Evento para fechar o modal ao clicar no botão de fechar
+document.querySelector('#modal-observacao .close').addEventListener('click', fecharModalObservacao);
+
+// Evento para fechar o modal ao clicar fora da área do modal
+window.addEventListener('click', (event) => {
+    const modalObservacao = document.getElementById('modal-observacao');
+    if (event.target === modalObservacao) {
+        fecharModalObservacao();
+    }
+});
+
+// Adicionar evento de clique nos botões "ABRIR" da coluna de observação
+document.addEventListener('click', (event) => {
+    if (event.target.classList.contains('abrir-observacao')) {
+        const observacao = event.target.getAttribute('data-observacao');
+        abrirModalObservacao(observacao);
+    }
 });
